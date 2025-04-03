@@ -1,8 +1,7 @@
 import SwiftUI
 
 struct MoodLightView: View {
-    @EnvironmentObject var asleepManager: AsleepManager
-    @State private var isLightOn = false
+    @EnvironmentObject private var viewModel: MoodLightViewModel
     
     var body: some View {
         ZStack {
@@ -12,29 +11,34 @@ struct MoodLightView: View {
                 Spacer()
                 
                 Button(action: {
-                    withAnimation(.easeInOut(duration: 0.3)) {
-                        isLightOn.toggle()
-                    }
+                    viewModel.toggleLight()
                 }) {
                     ZStack {
-                        if isLightOn {
+                        if viewModel.isLightOn {
                             Circle()
-                                .fill(asleepManager.lightColor)
+                                .fill(viewModel.lightColor)
                                 .frame(width: 350, height: 350)
                                 .blur(radius: 20)
                                 .opacity(0.5)
                         }
                         
                         Circle()
-                            .fill(isLightOn ? asleepManager.lightColor : .gray)
+                            .fill(viewModel.isLightOn ? viewModel.lightColor : .gray)
                             .frame(width: 300, height: 300)
-                            .shadow(color: isLightOn ? asleepManager.lightColor : .clear,
+                            .shadow(color: viewModel.isLightOn ? viewModel.lightColor : .clear,
                                    radius: 20, x: 0, y: 0)
                     }
                 }
                 
                 Spacer()
+                
+                Text(viewModel.isTracking ? "Record 중..." : "Record 대기")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .padding()
             }
         }
+        .navigationTitle("무드등")
+        .navigationBarTitleDisplayMode(.inline)
     }
 } 
