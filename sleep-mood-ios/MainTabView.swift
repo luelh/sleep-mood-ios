@@ -5,17 +5,17 @@ struct MainTabView: View {
         TabView {
             MoodLightView()
                 .tabItem {
-                    Label("Mood Light", systemImage: "lightbulb.fill")
+                    Label("무드등", systemImage: "lightbulb.fill")
                 }
             
             SleepAnalysisView()
                 .tabItem {
-                    Label("Sleep Analysis", systemImage: "bed.double.fill")
+                    Label("수면분석", systemImage: "bed.double.fill")
                 }
             
             SettingsView()
                 .tabItem {
-                    Label("Settings", systemImage: "gear")
+                    Label("설정", systemImage: "gear")
                 }
         }
     }

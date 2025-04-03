@@ -1,45 +1,45 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @EnvironmentObject var asleepManager: AsleepManager
+    @StateObject private var viewModel = SettingsViewModel()
     @State private var showingColorPicker = false
     
     var body: some View {
         NavigationView {
             List {
-                Section(header: Text("User Information")) {
+                Section(header: Text("사용자 정보")) {
                     HStack {
-                        Text("User ID")
+                        Text("사용자 ID")
                         Spacer()
-                        Text(asleepManager.userId)
+                        Text(viewModel.userId)
                             .foregroundColor(.gray)
                     }
                     
                     HStack {
-                        Text("Version")
+                        Text("버전")
                         Spacer()
-                        Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0")
+                        Text(viewModel.version)
                             .foregroundColor(.gray)
                     }
                 }
                 
-                Section(header: Text("Light Settings")) {
+                Section(header: Text("조명 설정")) {
                     Button(action: {
                         showingColorPicker = true
                     }) {
                         HStack {
-                            Text("Light Color")
+                            Text("조명 색상")
                             Spacer()
                             Circle()
-                                .fill(asleepManager.lightColor)
+                                .fill(Color.yellow.opacity(0.5))
                                 .frame(width: 24, height: 24)
                         }
                     }
                 }
             }
-            .navigationTitle("Settings")
+            .navigationTitle("설정")
             .sheet(isPresented: $showingColorPicker) {
-                ColorPickerView(selectedColor: $asleepManager.lightColor)
+                ColorPickerView(selectedColor: .constant(Color.yellow.opacity(0.5)))
             }
         }
     }
@@ -51,10 +51,10 @@ struct ColorPickerView: View {
     
     var body: some View {
         NavigationView {
-            ColorPicker("Select Color", selection: $selectedColor)
+            ColorPicker("색상 선택", selection: $selectedColor)
                 .padding()
-                .navigationTitle("Choose Color")
-                .navigationBarItems(trailing: Button("Done") {
+                .navigationTitle("색상 선택")
+                .navigationBarItems(trailing: Button("완료") {
                     presentationMode.wrappedValue.dismiss()
                 })
         }

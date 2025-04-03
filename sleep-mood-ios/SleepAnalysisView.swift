@@ -2,13 +2,12 @@ import SwiftUI
 import AsleepSDK
 
 struct SleepAnalysisView: View {
-    @EnvironmentObject var asleepManager: AsleepManager
-    @State private var isAnalyzing = false
+    @StateObject private var viewModel = SleepAnalysisViewModel()
     
     var body: some View {
         NavigationView {
             VStack {
-                if asleepManager.sessions.isEmpty {
+                if viewModel.sessions.isEmpty {
                     VStack(spacing: 20) {
                         Image(systemName: "bed.double")
                             .font(.system(size: 60))
@@ -21,7 +20,7 @@ struct SleepAnalysisView: View {
                     }
                     .padding()
                 } else {
-                    List(asleepManager.sessions) { session in
+                    List(viewModel.sessions) { session in
                         NavigationLink(destination: SleepAnalysisDetailView(session: session)) {
                             VStack(alignment: .leading, spacing: 8) {
                                 Text("\(session.date, style: .date)")
@@ -42,22 +41,17 @@ struct SleepAnalysisView: View {
                 Spacer()
                 
                 Button(action: {
-                    if isAnalyzing {
-                        asleepManager.stopSleepAnalysis()
-                    } else {
-                        asleepManager.startSleepAnalysis()
-                    }
-                    isAnalyzing.toggle()
+                    viewModel.toggleAnalysis()
                 }) {
                     HStack {
-                        Image(systemName: isAnalyzing ? "stop.circle.fill" : "play.circle.fill")
-                        Text(isAnalyzing ? "수면 분석 중지" : "수면 분석 시작")
+                        Image(systemName: viewModel.isAnalyzing ? "stop.circle.fill" : "play.circle.fill")
+                        Text(viewModel.isAnalyzing ? "수면 분석 중지" : "수면 분석 시작")
                     }
                     .font(.headline)
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(isAnalyzing ? Color.red : Color.blue)
+                    .background(viewModel.isAnalyzing ? Color.red : Color.blue)
                     .cornerRadius(10)
                 }
                 .padding()
@@ -67,19 +61,12 @@ struct SleepAnalysisView: View {
     }
 }
 
-struct SleepSession: Identifiable {
-    let id: String
-    let date: Date
-    // Add other session properties as needed
-}
-
 struct SleepAnalysisDetailView: View {
     let session: SleepSession
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                // 수면 시간 정보
                 VStack(alignment: .leading, spacing: 10) {
                     Text("수면 시간")
                         .font(.headline)
@@ -90,7 +77,6 @@ struct SleepAnalysisDetailView: View {
                     .font(.title2)
                 }
                 
-                // 수면 품질 정보
                 VStack(alignment: .leading, spacing: 10) {
                     Text("수면 품질")
                         .font(.headline)
@@ -100,8 +86,6 @@ struct SleepAnalysisDetailView: View {
                     }
                     .font(.title2)
                 }
-                
-                // 추가 분석 정보가 있다면 여기에 추가
             }
             .padding()
         }
