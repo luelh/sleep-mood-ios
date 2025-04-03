@@ -19,7 +19,8 @@ struct SleepAnalysisView: View {
                             .foregroundColor(.gray)
                     }
                     .padding()
-                } else {
+                }
+                else {
                     List {
                         ForEach(viewModel.reportList, id: \.sessionId) { item in
                             NavigationLink(
@@ -35,9 +36,7 @@ struct SleepAnalysisView: View {
                                 }
                             }
                             .onChange(of: viewModel.selectedSessionId) { _ in
-                                if viewModel.selectedSessionId == item.sessionId {
-                                    viewModel.fetchReport()
-                                }
+                                viewModel.fetchReport()
                             }
                         }
                     }
@@ -58,9 +57,8 @@ struct SleepAnalysisDetailView: View {
                     .frame(maxWidth: .infinity)
             }
         }
-        .navigationTitle("수면 분석 리포트")
     }
-
+    
     @ViewBuilder
     func detailView(report: Asleep.Model.Report) -> some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -76,9 +74,10 @@ struct SleepAnalysisDetailView: View {
         }
         .padding(.horizontal)
     }
-
+    
     @ViewBuilder
     func stagesView(report: Asleep.Model.Report) -> some View {
+        
         VStack(alignment: .leading, spacing: 10) {
             Text("Sleep Stages")
                 .font(.body.bold())
