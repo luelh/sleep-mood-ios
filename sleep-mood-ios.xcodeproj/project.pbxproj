@@ -1,0 +1,612 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6C20539A2D9E576B003E476C /* AsleepSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 6C2053992D9E576B003E476C /* AsleepSDK */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6C2053652D9E5171003E476C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6C20534C2D9E5170003E476C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6C2053532D9E5170003E476C;
+			remoteInfo = "sleep-mood-ios";
+		};
+		6C20536F2D9E5171003E476C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6C20534C2D9E5170003E476C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6C2053532D9E5170003E476C;
+			remoteInfo = "sleep-mood-ios";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		6C2053542D9E5170003E476C /* sleep-mood-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sleep-mood-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C2053642D9E5171003E476C /* sleep-mood-iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sleep-mood-iosTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C20536E2D9E5171003E476C /* sleep-mood-iosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sleep-mood-iosUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		6C20539C2D9E5955003E476C /* Exceptions for "sleep-mood-ios" folder in "sleep-mood-ios" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 6C2053532D9E5170003E476C /* sleep-mood-ios */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		6C2053562D9E5170003E476C /* sleep-mood-ios */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				6C20539C2D9E5955003E476C /* Exceptions for "sleep-mood-ios" folder in "sleep-mood-ios" target */,
+			);
+			path = "sleep-mood-ios";
+			sourceTree = "<group>";
+		};
+		6C2053672D9E5171003E476C /* sleep-mood-iosTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "sleep-mood-iosTests";
+			sourceTree = "<group>";
+		};
+		6C2053712D9E5171003E476C /* sleep-mood-iosUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "sleep-mood-iosUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6C2053512D9E5170003E476C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6C20539A2D9E576B003E476C /* AsleepSDK in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6C2053612D9E5171003E476C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6C20536B2D9E5171003E476C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6C20534B2D9E5170003E476C = {
+			isa = PBXGroup;
+			children = (
+				6C2053562D9E5170003E476C /* sleep-mood-ios */,
+				6C2053672D9E5171003E476C /* sleep-mood-iosTests */,
+				6C2053712D9E5171003E476C /* sleep-mood-iosUITests */,
+				6C2053552D9E5170003E476C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6C2053552D9E5170003E476C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6C2053542D9E5170003E476C /* sleep-mood-ios.app */,
+				6C2053642D9E5171003E476C /* sleep-mood-iosTests.xctest */,
+				6C20536E2D9E5171003E476C /* sleep-mood-iosUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6C2053532D9E5170003E476C /* sleep-mood-ios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6C2053782D9E5171003E476C /* Build configuration list for PBXNativeTarget "sleep-mood-ios" */;
+			buildPhases = (
+				6C2053502D9E5170003E476C /* Sources */,
+				6C2053512D9E5170003E476C /* Frameworks */,
+				6C2053522D9E5170003E476C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				6C2053562D9E5170003E476C /* sleep-mood-ios */,
+			);
+			name = "sleep-mood-ios";
+			packageProductDependencies = (
+				6C2053992D9E576B003E476C /* AsleepSDK */,
+			);
+			productName = "sleep-mood-ios";
+			productReference = 6C2053542D9E5170003E476C /* sleep-mood-ios.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6C2053632D9E5171003E476C /* sleep-mood-iosTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6C20537B2D9E5171003E476C /* Build configuration list for PBXNativeTarget "sleep-mood-iosTests" */;
+			buildPhases = (
+				6C2053602D9E5171003E476C /* Sources */,
+				6C2053612D9E5171003E476C /* Frameworks */,
+				6C2053622D9E5171003E476C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6C2053662D9E5171003E476C /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				6C2053672D9E5171003E476C /* sleep-mood-iosTests */,
+			);
+			name = "sleep-mood-iosTests";
+			packageProductDependencies = (
+			);
+			productName = "sleep-mood-iosTests";
+			productReference = 6C2053642D9E5171003E476C /* sleep-mood-iosTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		6C20536D2D9E5171003E476C /* sleep-mood-iosUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6C20537E2D9E5171003E476C /* Build configuration list for PBXNativeTarget "sleep-mood-iosUITests" */;
+			buildPhases = (
+				6C20536A2D9E5171003E476C /* Sources */,
+				6C20536B2D9E5171003E476C /* Frameworks */,
+				6C20536C2D9E5171003E476C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6C2053702D9E5171003E476C /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				6C2053712D9E5171003E476C /* sleep-mood-iosUITests */,
+			);
+			name = "sleep-mood-iosUITests";
+			packageProductDependencies = (
+			);
+			productName = "sleep-mood-iosUITests";
+			productReference = 6C20536E2D9E5171003E476C /* sleep-mood-iosUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6C20534C2D9E5170003E476C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					6C2053532D9E5170003E476C = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					6C2053632D9E5171003E476C = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 6C2053532D9E5170003E476C;
+					};
+					6C20536D2D9E5171003E476C = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 6C2053532D9E5170003E476C;
+					};
+				};
+			};
+			buildConfigurationList = 6C20534F2D9E5170003E476C /* Build configuration list for PBXProject "sleep-mood-ios" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6C20534B2D9E5170003E476C;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				6C2053982D9E576B003E476C /* XCRemoteSwiftPackageReference "asleep-sdk-ios" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 6C2053552D9E5170003E476C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6C2053532D9E5170003E476C /* sleep-mood-ios */,
+				6C2053632D9E5171003E476C /* sleep-mood-iosTests */,
+				6C20536D2D9E5171003E476C /* sleep-mood-iosUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6C2053522D9E5170003E476C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6C2053622D9E5171003E476C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6C20536C2D9E5171003E476C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6C2053502D9E5170003E476C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6C2053602D9E5171003E476C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6C20536A2D9E5171003E476C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6C2053662D9E5171003E476C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6C2053532D9E5170003E476C /* sleep-mood-ios */;
+			targetProxy = 6C2053652D9E5171003E476C /* PBXContainerItemProxy */;
+		};
+		6C2053702D9E5171003E476C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6C2053532D9E5170003E476C /* sleep-mood-ios */;
+			targetProxy = 6C20536F2D9E5171003E476C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		6C2053762D9E5171003E476C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		6C2053772D9E5171003E476C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6C2053792D9E5171003E476C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"sleep-mood-ios/Preview Content\"";
+				DEVELOPMENT_TEAM = M49GZVCJ3B;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "sleep-mood-ios/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = SleepMood;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "SleepMood에서 수면 측정 및 리포트 발행을 위해 마이크를 사용합니다.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ai.asleep.sleepmood;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6C20537A2D9E5171003E476C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"sleep-mood-ios/Preview Content\"";
+				DEVELOPMENT_TEAM = M49GZVCJ3B;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "sleep-mood-ios/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = SleepMood;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "SleepMood에서 수면 측정 및 리포트 발행을 위해 마이크를 사용합니다.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ai.asleep.sleepmood;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6C20537C2D9E5171003E476C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4SCSYK3L3N;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ai.asleep.sleep-mood-iosTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sleep-mood-ios.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/sleep-mood-ios";
+			};
+			name = Debug;
+		};
+		6C20537D2D9E5171003E476C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4SCSYK3L3N;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ai.asleep.sleep-mood-iosTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sleep-mood-ios.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/sleep-mood-ios";
+			};
+			name = Release;
+		};
+		6C20537F2D9E5171003E476C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4SCSYK3L3N;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ai.asleep.sleep-mood-iosUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "sleep-mood-ios";
+			};
+			name = Debug;
+		};
+		6C2053802D9E5171003E476C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4SCSYK3L3N;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ai.asleep.sleep-mood-iosUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "sleep-mood-ios";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6C20534F2D9E5170003E476C /* Build configuration list for PBXProject "sleep-mood-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6C2053762D9E5171003E476C /* Debug */,
+				6C2053772D9E5171003E476C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6C2053782D9E5171003E476C /* Build configuration list for PBXNativeTarget "sleep-mood-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6C2053792D9E5171003E476C /* Debug */,
+				6C20537A2D9E5171003E476C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6C20537B2D9E5171003E476C /* Build configuration list for PBXNativeTarget "sleep-mood-iosTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6C20537C2D9E5171003E476C /* Debug */,
+				6C20537D2D9E5171003E476C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6C20537E2D9E5171003E476C /* Build configuration list for PBXNativeTarget "sleep-mood-iosUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6C20537F2D9E5171003E476C /* Debug */,
+				6C2053802D9E5171003E476C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6C2053982D9E576B003E476C /* XCRemoteSwiftPackageReference "asleep-sdk-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/asleep-ai/asleep-sdk-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6C2053992D9E576B003E476C /* AsleepSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6C2053982D9E576B003E476C /* XCRemoteSwiftPackageReference "asleep-sdk-ios" */;
+			productName = AsleepSDK;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 6C20534C2D9E5170003E476C /* Project object */;
+}
