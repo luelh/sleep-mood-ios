@@ -7,7 +7,7 @@ struct SleepAnalysisView: View {
     var body: some View {
         NavigationView {
             VStack {
-                if viewModel.sessions.isEmpty {
+                if viewModel.reportList.isEmpty {
                     VStack(spacing: 20) {
                         Image(systemName: "bed.double")
                             .font(.system(size: 60))
@@ -20,41 +20,28 @@ struct SleepAnalysisView: View {
                     }
                     .padding()
                 } else {
-                    List(viewModel.sessions) { session in
-                        NavigationLink(destination: SleepAnalysisDetailView(session: session)) {
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text("\(session.date, style: .date)")
-                                    .font(.headline)
-                                HStack {
-                                    Label(session.formattedDuration, systemImage: "clock")
-                                    Spacer()
-                                    Label(session.qualityPercentage, systemImage: "chart.bar.fill")
+                    List {
+                        ForEach(viewModel.reportList, id: \.sessionId) { item in
+                            NavigationLink(
+                                destination: SleepAnalysisDetailView(report: viewModel.selectedReport),
+                                tag: item.sessionId,
+                                selection: $viewModel.selectedSessionId
+                            ) {
+                                VStack(alignment: .leading) {
+                                    Text("ID: \(item.sessionId)")
+                                    Text("State: \(item.state)")
+                                    Text("Start time: \(item.sessionStartTime.fullDateString)")
+                                    Text("End time: \(item.sessionEndTime?.fullDateString ?? "")")
                                 }
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
                             }
-                            .padding(.vertical, 4)
+                            .onChange(of: viewModel.selectedSessionId) { _ in
+                                if viewModel.selectedSessionId == item.sessionId {
+                                    viewModel.fetchReport()
+                                }
+                            }
                         }
                     }
                 }
-                
-                Spacer()
-                
-                Button(action: {
-                    viewModel.toggleAnalysis()
-                }) {
-                    HStack {
-                        Image(systemName: viewModel.isAnalyzing ? "stop.circle.fill" : "play.circle.fill")
-                        Text(viewModel.isAnalyzing ? "수면 분석 중지" : "수면 분석 시작")
-                    }
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(viewModel.isAnalyzing ? Color.red : Color.blue)
-                    .cornerRadius(10)
-                }
-                .padding()
             }
             .navigationTitle("수면 분석")
         }
@@ -62,33 +49,86 @@ struct SleepAnalysisView: View {
 }
 
 struct SleepAnalysisDetailView: View {
-    let session: SleepSession
+    let report: Asleep.Model.Report?
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("수면 시간")
-                        .font(.headline)
-                    HStack {
-                        Image(systemName: "clock")
-                        Text(session.formattedDuration)
-                    }
-                    .font(.title2)
-                }
-                
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("수면 품질")
-                        .font(.headline)
-                    HStack {
-                        Image(systemName: "chart.bar.fill")
-                        Text(session.qualityPercentage)
-                    }
-                    .font(.title2)
-                }
+        if let report = self.report {
+            ScrollView {
+                detailView(report: report)
+                    .frame(maxWidth: .infinity)
             }
-            .padding()
         }
         .navigationTitle("수면 분석 리포트")
     }
-} 
+
+    @ViewBuilder
+    func detailView(report: Asleep.Model.Report) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(report.session.id)
+                .font(.title2.bold())
+            Text("Created Timezone: \(report.session.createdTimezone.description)")
+            Text("Time Range: \(report.session.startTime.fullDateString + (report.session.endTime.map { " ~ " + $0.fullDateString } ?? ""))")
+            Text("Unexpected End Time: \(report.session.unexpectedEndTime?.description ?? "N/A")")
+            Text("Session State: \(report.session.state.rawValue)")
+            Text("Missing Data Ratio: \(String(report.missingDataRatio))")
+            Text("Preculiarities: \(report.peculiarities.description)")
+            stagesView(report: report)
+        }
+        .padding(.horizontal)
+    }
+
+    @ViewBuilder
+    func stagesView(report: Asleep.Model.Report) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Sleep Stages")
+                .font(.body.bold())
+                .padding(.top, 4)
+            if let sleepStages = report.session.sleepStages {
+                Text("[\(sleepStages.map(String.init).joined(separator: ", "))]")
+            }
+            
+            if report.stat != nil {
+                Text("""
+                    SleepEfficiency: \(report.stat?.sleepEfficiency?.description ?? "nil")
+                    SleepLatency: \(report.stat?.sleepLatency?.description ?? "nil")
+                    WakeupLatency: \(report.stat?.wakeupLatency?.description ?? "nil")
+                    SleepTime: \(report.stat?.sleepTime?.description ?? "nil")
+                    WakeTime: \(report.stat?.wakeTime?.description ?? "nil")
+                    LightLatency: \(report.stat?.lightLatency?.description ?? "nil")
+                    DeepLatency: \(report.stat?.deepLatency?.description ?? "nil")
+                    RemLatency: \(report.stat?.remLatency?.description ?? "nil")
+                    TimeInWake: \(report.stat?.timeInWake?.description ?? "nil")
+                    TimeInSleep: \(report.stat?.timeInSleep?.description ?? "nil")
+                    TimeInBed: \(report.stat?.timeInBed?.description ?? "nil")
+                    TimeInSleepPeriod: \(report.stat?.timeInSleepPeriod?.description ?? "nil")
+                    TimeInREM: \(report.stat?.timeInRem?.description ?? "nil")
+                    TimeInLight: \(report.stat?.timeInLight?.description ?? "nil")
+                    TimeInDeep: \(report.stat?.timeInDeep?.description ?? "nil")
+                    WakeRatio: \(report.stat?.wakeRatio?.description ?? "nil")
+                    SleepRatio: \(report.stat?.sleepRatio?.description ?? "nil")
+                    RemRatio: \(report.stat?.remRatio?.description ?? "nil")
+                    LightRatio: \(report.stat?.lightRatio?.description ?? "nil")
+                    DeepRatio: \(report.stat?.deepRatio?.description ?? "nil")
+                    """)
+            } else {
+                Text("Stat is nil")
+            }
+            
+            Text("Snoring Stages")
+                .font(.body.bold())
+                .padding(.top, 4)
+            if let snoringStages = report.session.snoringStages {
+                Text("[\(snoringStages.map(String.init).joined(separator: ", "))]")
+            }
+            if report.stat != nil {
+                Text("""
+                    TimeInSnoring: \(report.stat?.timeInSnoring?.description ?? "nil")
+                    TimeInNoSnoring: \(report.stat?.timeInNoSnoring?.description ?? "nil")
+                    SnoringRatio: \(report.stat?.snoringRatio?.description ?? "nil")
+                    NoSnoringRatio: \(report.stat?.noSnoringRatio?.description ?? "nil")
+                    SnoringCount: \(report.stat?.snoringCount?.description ?? "nil")
+                    """)
+            }
+        }
+    }
+}
