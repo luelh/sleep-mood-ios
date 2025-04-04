@@ -48,16 +48,20 @@ class MoodLightViewModel: ObservableObject {
             name: .asleepConfigDidUpdate,
             object: nil
         )
+        
+        // 초기 config가 있다면 바로 트래킹 매니저 초기화
+        if configService.config != nil {
+            initSleepTrackingManager()
+        } else {
+            configService.initAsleepConfig()
+        }
     }
     
     @objc private func configDidUpdate() {
         initSleepTrackingManager()
-        trackingManager?.startTracking()
     }
 
     func toggleLight() {
-        isLightOn.toggle()
-        
         if isTracking {
             stopTracking()
         } else {
@@ -90,26 +94,6 @@ class MoodLightViewModel: ObservableObject {
     }
 }
 
-// MARK: - AsleepSDK Delegate - AsleepConfigDelegate
-extension MoodLightViewModel: AsleepConfigDelegate {
-    func userDidJoin(userId: String, config: AsleepSDK.Asleep.Config) {
-        Task { @MainActor in
-            print("UserDidJoin - Saving userId")
-            self.userId = userId
-            initSleepTrackingManager()
-            trackingManager?.startTracking()
-        }
-    }
-    
-    func didFailUserJoin(error: AsleepSDK.Asleep.AsleepError) {
-        print("Failed user join with the error:", error)
-    }
-    
-    func userDidDelete(userId: String) {
-        print("Deleted user id:", userId)
-    }
-}
-
 
 // MARK: - AsleepSDK Delegate - AsleepSleepTrackingManagerDelegate
 
@@ -117,6 +101,7 @@ extension MoodLightViewModel: AsleepSleepTrackingManagerDelegate {
     func didCreate() {
         Task { @MainActor in
             self.isTracking = true
+            self.isLightOn = true
             self.error = nil
         }
     }
@@ -130,6 +115,7 @@ extension MoodLightViewModel: AsleepSleepTrackingManagerDelegate {
     func didClose(sessionId: String) {
         Task { @MainActor in
             self.isTracking = false
+            self.isLightOn = false
             self.sessionId = sessionId
         }
     }
@@ -139,6 +125,7 @@ extension MoodLightViewModel: AsleepSleepTrackingManagerDelegate {
         case let .httpStatus(code, _, message) where code == 403 || code == 404:
             Task { @MainActor in
                 self.isTracking = false
+                self.isLightOn = false
                 self.error = String("\(code): \(message ?? "")")
             }
             print("Stopped sleep tracking with the error: ", error)
@@ -158,8 +145,9 @@ extension MoodLightViewModel: AsleepSleepTrackingManagerDelegate {
     func micPermissionWasDenied() {
         Task { @MainActor in
             self.isTracking = false
+            self.isLightOn = false
         }
-        print(micPermissionWasDenied)
+        print("Mic permission was denied")
     }
     
     func analysing(session: AsleepSDK.Asleep.Model.Session) {

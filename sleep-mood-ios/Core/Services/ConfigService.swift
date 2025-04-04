@@ -13,9 +13,7 @@ class ConfigService: ObservableObject {
     
     @Published private(set) var config: Asleep.Config?
     
-    var userId: String {
-        UserDefaults.standard.string(forKey: "sleepmood+userId") ?? ""
-    }
+    var userId: String = UserDefaults.standard.string(forKey: "sleepmood+userId") ?? ""
     
     var apiKey: String {
         Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String ?? ""
@@ -35,6 +33,7 @@ class ConfigService: ObservableObject {
         print("api key info.plist:", Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String ?? "")
         print("api key:", apiKey)
         print("Initializing Asleep Config with userId:", userId.isEmpty ? nil : userId)
+        guard !apiKey.isEmpty else { return }
         Asleep.initAsleepConfig(
             apiKey: apiKey,
             userId: userId.isEmpty ? nil : userId,
@@ -61,6 +60,7 @@ extension ConfigService: AsleepConfigDelegate {
         Task { @MainActor in
             print("UserDidJoin - Setting config")
             self.config = config
+            self.userId = userId
             NotificationCenter.default.post(name: .asleepConfigDidUpdate, object: nil)
         }
     }
