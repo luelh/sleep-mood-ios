@@ -24,18 +24,17 @@ class SleepAnalysisViewModel: ObservableObject {
             name: .asleepConfigDidUpdate,
             object: nil
         )
-        
-        // 초기 config가 있다면 바로 리포트 생성
-        if configService.config != nil {
-            createReportList()
-        } else {
-            configService.initAsleepConfig()
-        }
     }
     
     @objc private func configDidUpdate() {
         print("Config updated - Creating report list")
         createReportList()
+    }
+    
+    func checkConfigAndCreateReportList() {
+        if configService.config != nil {
+            createReportList()
+        }
     }
     
     func createReportList() {

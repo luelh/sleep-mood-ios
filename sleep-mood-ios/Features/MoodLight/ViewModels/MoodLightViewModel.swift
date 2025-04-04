@@ -9,12 +9,6 @@ class MoodLightViewModel: ObservableObject {
     private(set) var reports: Asleep.Reports?
     
     // MARK: - config를 만들기 위한 기본 값
-    private(set) var userId: String {
-        didSet {
-            UserDefaults.standard.set(userId, forKey: "sleepmood+userId")
-        }
-    }
-
     private var baseUrl: String {
         didSet {
             UserDefaults.standard.set(baseUrl, forKey: "sleepmood+baseurl")
@@ -38,7 +32,6 @@ class MoodLightViewModel: ObservableObject {
     @Published var startTime: Date?
     
     init() {
-        self.userId = UserDefaults.standard.string(forKey: "sleepmood+userId") ?? ""
         self.baseUrl = UserDefaults.standard.string(forKey: "sleepmood+baseurl") ?? ""
         self.callbackUrl = UserDefaults.standard.string(forKey: "sleepmood+callbackurl") ?? ""
         self.apiKey = Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String ?? ""
@@ -49,7 +42,6 @@ class MoodLightViewModel: ObservableObject {
             object: nil
         )
         
-        // 초기 config가 있다면 바로 트래킹 매니저 초기화
         if configService.config != nil {
             initSleepTrackingManager()
         } else {
