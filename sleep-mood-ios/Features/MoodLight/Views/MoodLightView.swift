@@ -4,6 +4,8 @@ struct MoodLightView: View {
     @EnvironmentObject private var viewModel: MoodLightViewModel
     
     var body: some View {
+        let lightColor = viewModel.lightColor.color
+        
         ZStack {
             Color.black.edgesIgnoringSafeArea(.all)
             
@@ -16,16 +18,16 @@ struct MoodLightView: View {
                     ZStack {
                         if viewModel.isLightOn {
                             Circle()
-                                .fill(viewModel.lightColor)
+                                .fill(lightColor)
                                 .frame(width: 350, height: 350)
                                 .blur(radius: 20)
                                 .opacity(0.5)
                         }
                         
                         Circle()
-                            .fill(viewModel.isLightOn ? viewModel.lightColor : .gray)
+                            .fill(viewModel.isLightOn ? lightColor : .gray)
                             .frame(width: 300, height: 300)
-                            .shadow(color: viewModel.isLightOn ? viewModel.lightColor : .clear,
+                            .shadow(color: viewModel.isLightOn ? lightColor : .clear,
                                    radius: 20, x: 0, y: 0)
                     }
                 }

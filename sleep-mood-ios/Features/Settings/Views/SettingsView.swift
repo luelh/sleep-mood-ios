@@ -3,6 +3,7 @@ import SwiftUI
 struct SettingsView: View {
     @StateObject private var viewModel = SettingsViewModel()
     @State private var showingColorPicker = false
+    @State private var selectedLightColor = RGBAColor(red: 1, green: 1, blue: 0, alpha: 0.5)
     
     var body: some View {
         NavigationView {
@@ -31,7 +32,7 @@ struct SettingsView: View {
                             Text("조명 색상")
                             Spacer()
                             Circle()
-                                .fill(Color.yellow.opacity(0.5))
+                                .fill(selectedLightColor.color)
                                 .frame(width: 24, height: 24)
                         }
                     }
@@ -39,24 +40,18 @@ struct SettingsView: View {
             }
             .navigationTitle("설정")
             .sheet(isPresented: $showingColorPicker) {
-                ColorPickerView(selectedColor: .constant(Color.yellow.opacity(0.5)))
+                ColorPickerView(selectedColor: Binding(
+                    get: { selectedLightColor.color },
+                    set: { newColor in
+                        selectedLightColor = RGBAColor(color: newColor)
+                        viewModel.saveLightColor(selectedLightColor)
+                    }
+                ))
+            }
+            .onAppear {
+                viewModel.refreshUserId()
+                selectedLightColor = viewModel.loadLightColor()
             }
         }
     }
 }
-
-struct ColorPickerView: View {
-    @Binding var selectedColor: Color
-    @Environment(\.presentationMode) var presentationMode
-    
-    var body: some View {
-        NavigationView {
-            ColorPicker("색상 선택", selection: $selectedColor)
-                .padding()
-                .navigationTitle("색상 선택")
-                .navigationBarItems(trailing: Button("완료") {
-                    presentationMode.wrappedValue.dismiss()
-                })
-        }
-    }
-} 

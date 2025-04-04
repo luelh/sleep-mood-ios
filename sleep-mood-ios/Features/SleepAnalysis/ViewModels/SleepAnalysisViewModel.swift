@@ -2,12 +2,21 @@ import Foundation
 import AsleepSDK
 
 class SleepAnalysisViewModel: ObservableObject {
+    
+    
+    // MARK: - dependencies
+    
     private let configService = ConfigService.shared
+    
+    
+    // MARK: - private properties
+    
     private var reports: Asleep.Reports?
     private var fromDate: String = "2025-01-01"
     private var toDate: String = "2025-04-04"
-    private var isCreatingReportList = false
-    private var hasInitialConfig = false
+    
+    
+    // MARK: - published state
     
     @Published var reportList: [Asleep.Model.SleepSession] = []
     @Published var selectedSessionId: String? = nil {
@@ -20,68 +29,38 @@ class SleepAnalysisViewModel: ObservableObject {
     @Published var selectedReport: Asleep.Model.Report? = nil
     @Published var isAnalyzing = false
     
+    
+    // MARK: - Initialize
+    
     init() {
-        NotificationCenter.default.addObserver(self,
-            selector: #selector(configDidUpdate),
-            name: .asleepConfigDidUpdate,
-            object: nil
-        )
-//        
-//        // 초기 config 상태 확인
-//        hasInitialConfig = configService.config != nil
+        NotificationCenter.default.addObserver(self, selector: #selector(configDidUpdate), name: .asleepConfigDidUpdate, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     @objc private func configDidUpdate() {
         createReportList()
     }
     
-//    func checkConfigAndCreateReportList() {
-//        guard !isCreatingReportList else { 
-//            print("Report list creation already in progress")
-//            return 
-//        }
-//        
-//        if configService.config != nil {
-//            if !hasInitialConfig {
-//                hasInitialConfig = true
-//                createReportList()
-//            }
-//        } else {
-//            print("Initializing Asleep config")
-//            configService.initAsleepConfig()
-//        }
-//    }
     
-    func createReportList() {
-//        guard !isCreatingReportList else { 
-//            print("Skipping createReportList - already in progress")
-//            return 
-//        }
-//        
-//        isCreatingReportList = true
-//        print("Creating report list - Config exists:", configService.config != nil)
-        
-        reports = configService.createReports()
-        if reports != nil {
-            fetchReportList()
-        } else {
-            print("No config available for creating reports")
-            isCreatingReportList = false
-        }
-    }
+    // MARK: - private method
     
     private func fetchReportList() {
+        guard let reports else { return }
+
         Task {
             do {
-                let reportList = try await reports?.reports(fromDate: fromDate, toDate: toDate)
+                let list = try await reports.reports(fromDate: fromDate, toDate: toDate)
                 await MainActor.run {
-                    self.reportList = reportList ?? []
-                    print("Fetched report list count:", self.reportList.count)
-                    self.isCreatingReportList = false
+                    self.reportList = list
+                    print("Fetched report list: \(self.reportList.count) items")
                 }
             } catch {
-                print("Failed to fetch report list:", error)
-                self.isCreatingReportList = false
+                await MainActor.run {
+                    print("Failed to fetch report list:", error.localizedDescription)
+                }
             }
         }
     }
@@ -90,11 +69,29 @@ class SleepAnalysisViewModel: ObservableObject {
         guard let sessionId = selectedSessionId else { return }
         
         Task {
-            if let fetchedReport = try? await reports?.report(sessionId: sessionId) {
+            do {
+                let report = try await reports?.report(sessionId: sessionId)
                 await MainActor.run {
-                    selectedReport = fetchedReport
+                    self.selectedReport = report
+                    print("Fetched report for sessionId:", sessionId)
+                }
+            } catch {
+                await MainActor.run {
+                    print("Failed to fetch report for sessionId \(sessionId):", error.localizedDescription)
                 }
             }
         }
+    }
+    
+    
+    // MARK: - internal method
+    
+    func createReportList() {
+        guard let reports = configService.createReports() else {
+            print("No config available for creating reports")
+            return
+        }
+        self.reports = reports
+        fetchReportList()
     }
 }
