@@ -26,44 +26,40 @@ class SleepAnalysisViewModel: ObservableObject {
             name: .asleepConfigDidUpdate,
             object: nil
         )
-        
-        // 초기 config 상태 확인
-        hasInitialConfig = configService.config != nil
+//        
+//        // 초기 config 상태 확인
+//        hasInitialConfig = configService.config != nil
     }
     
     @objc private func configDidUpdate() {
-        print("Config updated notification received")
-        if !hasInitialConfig {
-            hasInitialConfig = true
-            createReportList()
-        }
+        createReportList()
     }
     
-    func checkConfigAndCreateReportList() {
-        guard !isCreatingReportList else { 
-            print("Report list creation already in progress")
-            return 
-        }
-        
-        if configService.config != nil {
-            if !hasInitialConfig {
-                hasInitialConfig = true
-                createReportList()
-            }
-        } else {
-            print("Initializing Asleep config")
-            configService.initAsleepConfig()
-        }
-    }
+//    func checkConfigAndCreateReportList() {
+//        guard !isCreatingReportList else { 
+//            print("Report list creation already in progress")
+//            return 
+//        }
+//        
+//        if configService.config != nil {
+//            if !hasInitialConfig {
+//                hasInitialConfig = true
+//                createReportList()
+//            }
+//        } else {
+//            print("Initializing Asleep config")
+//            configService.initAsleepConfig()
+//        }
+//    }
     
-    private func createReportList() {
-        guard !isCreatingReportList else { 
-            print("Skipping createReportList - already in progress")
-            return 
-        }
-        
-        isCreatingReportList = true
-        print("Creating report list - Config exists:", configService.config != nil)
+    func createReportList() {
+//        guard !isCreatingReportList else { 
+//            print("Skipping createReportList - already in progress")
+//            return 
+//        }
+//        
+//        isCreatingReportList = true
+//        print("Creating report list - Config exists:", configService.config != nil)
         
         reports = configService.createReports()
         if reports != nil {

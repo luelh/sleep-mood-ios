@@ -42,11 +42,11 @@ class MoodLightViewModel: ObservableObject {
             object: nil
         )
         
-        if configService.config != nil {
-            initSleepTrackingManager()
-        } else {
-            configService.initAsleepConfig()
-        }
+//        if configService.config != nil {
+//            initSleepTrackingManager()
+//        } else {
+//            configService.initAsleepConfig()
+//        }
     }
     
     @objc private func configDidUpdate() {
@@ -63,7 +63,7 @@ class MoodLightViewModel: ObservableObject {
     
     private func stopTracking() {
         trackingManager?.stopTracking()
-        initReport()
+//        initReport()
     }
     
     private func startTracking(hasConfig: Bool) {
@@ -81,9 +81,9 @@ class MoodLightViewModel: ObservableObject {
         trackingManager = configService.createSleepTrackingManager(delegate: self)
     }
 
-    func initReport() {
-        reports = configService.createReports()
-    }
+//    func initReport() {
+//        reports = configService.createReports()
+//    }
 }
 
 

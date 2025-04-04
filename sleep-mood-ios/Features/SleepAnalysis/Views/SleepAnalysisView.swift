@@ -43,7 +43,7 @@ struct SleepAnalysisView: View {
             .navigationTitle("수면 분석")
         }
         .onAppear {
-            viewModel.checkConfigAndCreateReportList()
+            viewModel.createReportList()
         }
     }
 }
