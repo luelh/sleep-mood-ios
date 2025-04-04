@@ -45,7 +45,7 @@ struct SleepAnalysisView: View {
         }
         .onAppear {
             print("SleepAnalysisView appeared - Loading report list")
-            viewModel.fetchReportList()
+            viewModel.createReportList()
         }
     }
 }

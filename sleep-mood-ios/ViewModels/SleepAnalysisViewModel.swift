@@ -2,18 +2,7 @@ import Foundation
 import AsleepSDK
 
 class SleepAnalysisViewModel: ObservableObject {
-//    private var config: Asleep.Config? {
-//        if let configData = UserDefaults.standard.data(forKey: "sleepmood+config") {
-//            do {
-//                return try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(configData) as? Asleep.Config
-//            } catch {
-//                print("Failed to unarchive config:", error)
-//                return nil
-//            }
-//        }
-//        return nil
-//    }
-    
+    private let configService = ConfigService.shared
     private var reports: Asleep.Reports?
     private var fromDate: String = "2025-01-01"
     private var toDate: String = "2025-04-04"
@@ -23,20 +12,41 @@ class SleepAnalysisViewModel: ObservableObject {
     @Published var selectedReport: Asleep.Model.Report? = nil
     @Published var isAnalyzing = false
     
-    func fetchReportList() {
-        Task {
-            let today = Date()
-            let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: today)!
-            if let reportList = try? await reports?.reports(fromDate: yesterday.simpleDateString,
-                                                            toDate: today.simpleDateString) {
-                self.reportList = reportList
-            }
+    init() {
+        NotificationCenter.default.addObserver(self,
+            selector: #selector(configDidUpdate),
+            name: .asleepConfigDidUpdate,
+            object: nil
+        )
+        
+        // 초기 config가 있다면 바로 리포트 생성
+        if configService.config != nil {
+            createReportList()
         }
+    }
+    
+    @objc private func configDidUpdate() {
+        print("Config updated - Creating report list")
+        createReportList()
+    }
+    
+    func createReportList() {
+        print("Creating report list - Config exists:", configService.config != nil)
+        reports = configService.createReports()
+        if reports != nil {
+            fetchReportList()
+        } else {
+            print("No config available for creating reports")
+        }
+    }
+    
+    func fetchReportList() {
         Task {
             do {
                 let reportList = try await reports?.reports(fromDate: fromDate, toDate: toDate)
                 await MainActor.run {
                     self.reportList = reportList ?? []
+                    print("Fetched report list count:", self.reportList.count)
                 }
             } catch {
                 print("Failed to fetch report list:", error)
@@ -55,8 +65,4 @@ class SleepAnalysisViewModel: ObservableObject {
             }
         }
     }
-}
-
-extension SleepAnalysisViewModel {
-    
 }

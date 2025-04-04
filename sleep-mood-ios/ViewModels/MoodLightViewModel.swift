@@ -3,88 +3,62 @@ import AsleepSDK
 import SwiftUI
 
 class MoodLightViewModel: ObservableObject {
+    private let configService = ConfigService.shared
     
     private(set) var trackingManager: Asleep.SleepTrackingManager?
     private(set) var reports: Asleep.Reports?
     
-    @Published private(set) var config: Asleep.Config? {
-        didSet {
-            if let config = config {
-                do {
-                    let data = try NSKeyedArchiver.archivedData(withRootObject: config, requiringSecureCoding: false)
-                    UserDefaults.standard.set(data, forKey: "sleepmood+config")
-                } catch {
-                    print("Failed to archive config:", error)
-                }
-            } else {
-                UserDefaults.standard.removeObject(forKey: "sleepmood+config")
-            }
-        }
-    }
-    
-    
-    @Published var userId: String {
+    // MARK: - config를 만들기 위한 기본 값
+    private(set) var userId: String {
         didSet {
             UserDefaults.standard.set(userId, forKey: "sleepmood+userId")
         }
     }
 
-    @Published var apiKey: String
-    @Published var baseUrl: String {
+    private var baseUrl: String {
         didSet {
             UserDefaults.standard.set(baseUrl, forKey: "sleepmood+baseurl")
         }
     }
 
-    @Published var callbackUrl: String {
+    private var callbackUrl: String {
         didSet {
             UserDefaults.standard.set(callbackUrl, forKey: "sleepmood+callbackurl")
         }
     }
     
-    
     @Published var sessionId: String?
     @Published var sequenceNumber: Int?
-
     @Published var error: String?
-    
     @Published var isLightOn = false
     @Published var lightColor: Color = .yellow.opacity(0.5)
-    
     @Published var isTracking = false
     @Published var startTime: Date?
     
     init() {
-        if let configData = UserDefaults.standard.data(forKey: "sleepmood+config") {
-            do {
-                if let config = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(configData) as? Asleep.Config {
-                    self.config = config
-                }
-            } catch {
-                print("Failed to unarchive config:", error)
-                self.config = nil
-            }
-        } else {
-            self.config = nil
-        }
-        
         self.userId = UserDefaults.standard.string(forKey: "sleepmood+userId") ?? ""
-        print(Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String ?? "")
-        self.apiKey = Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String ?? ""
         self.baseUrl = UserDefaults.standard.string(forKey: "sleepmood+baseurl") ?? ""
         self.callbackUrl = UserDefaults.standard.string(forKey: "sleepmood+callbackurl") ?? ""
+        
+        NotificationCenter.default.addObserver(self,
+            selector: #selector(configDidUpdate),
+            name: .asleepConfigDidUpdate,
+            object: nil
+        )
+    }
+    
+    @objc private func configDidUpdate() {
+        initSleepTrackingManager()
+        trackingManager?.startTracking()
     }
 
     func toggleLight() {
-//        withAnimation(.easeInOut(duration: 0.3)) {
-//            isLightOn.toggle()
-//        }
         isLightOn.toggle()
         
         if isTracking {
             stopTracking()
         } else {
-            startTracking(hasConfig: config != nil)
+            startTracking(hasConfig: configService.config != nil)
         }
     }
     
@@ -98,43 +72,30 @@ class MoodLightViewModel: ObservableObject {
         if hasConfig {
             trackingManager?.startTracking()
         } else {
-            initAsleepConfig(apiKey: apiKey, userId: userId, baseUrl: .init(string: baseUrl), callbackUrl: .init(string: callbackUrl))
+            configService.initAsleepConfig()  // ConfigService를 통해 config 초기화
         }
         startTime = Date()
         sequenceNumber = nil
     }
     
-    func initAsleepConfig(apiKey: String, userId: String, baseUrl: URL?, callbackUrl: URL?) {
-        Asleep.initAsleepConfig(apiKey: apiKey, userId: userId.isEmpty ? nil : userId, baseUrl: baseUrl, callbackUrl: callbackUrl, delegate: self)
-        Asleep.setDebugLoggerDelegate(self)
+    func initSleepTrackingManager() {
+        trackingManager = configService.createSleepTrackingManager(delegate: self)
+    }
+
+    func initReport() {
+        reports = configService.createReports()
     }
 }
 
-
-
-
-
-
 // MARK: - AsleepSDK Delegate - AsleepConfigDelegate
-
 extension MoodLightViewModel: AsleepConfigDelegate {
     func userDidJoin(userId: String, config: AsleepSDK.Asleep.Config) {
         Task { @MainActor in
-            self.config = config
+            print("UserDidJoin - Saving userId")
             self.userId = userId
             initSleepTrackingManager()
             trackingManager?.startTracking()
         }
-    }
-    
-    func initSleepTrackingManager() {
-        guard let config else { return }
-        trackingManager = Asleep.createSleepTrackingManager(config: config, delegate: self)
-    }
-
-    func initReport() {
-        guard let config else { return }
-        reports = Asleep.createReports(config: config)
     }
     
     func didFailUserJoin(error: AsleepSDK.Asleep.AsleepError) {
