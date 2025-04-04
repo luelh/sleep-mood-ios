@@ -51,7 +51,10 @@ class ConfigService: ObservableObject {
     }
     
     func createReports() -> Asleep.Reports? {
-        guard let config = config else { return nil }
+        guard let config = config else {
+            initAsleepConfig()
+            return nil
+        }
         return Asleep.createReports(config: config)
     }
     
