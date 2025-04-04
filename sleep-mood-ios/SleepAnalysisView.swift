@@ -19,8 +19,7 @@ struct SleepAnalysisView: View {
                             .foregroundColor(.gray)
                     }
                     .padding()
-                }
-                else {
+                } else {
                     List {
                         ForEach(viewModel.reportList, id: \.sessionId) { item in
                             NavigationLink(
@@ -43,6 +42,10 @@ struct SleepAnalysisView: View {
                 }
             }
             .navigationTitle("수면 분석")
+        }
+        .onAppear {
+            print("SleepAnalysisView appeared - Loading report list")
+            viewModel.fetchReportList()
         }
     }
 }

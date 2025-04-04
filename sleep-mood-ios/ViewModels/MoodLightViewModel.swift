@@ -7,7 +7,20 @@ class MoodLightViewModel: ObservableObject {
     private(set) var trackingManager: Asleep.SleepTrackingManager?
     private(set) var reports: Asleep.Reports?
     
-    @Published private(set) var config: Asleep.Config?
+    @Published private(set) var config: Asleep.Config? {
+        didSet {
+            if let config = config {
+                do {
+                    let data = try NSKeyedArchiver.archivedData(withRootObject: config, requiringSecureCoding: false)
+                    UserDefaults.standard.set(data, forKey: "sleepmood+config")
+                } catch {
+                    print("Failed to archive config:", error)
+                }
+            } else {
+                UserDefaults.standard.removeObject(forKey: "sleepmood+config")
+            }
+        }
+    }
     
     
     @Published var userId: String {
@@ -42,7 +55,21 @@ class MoodLightViewModel: ObservableObject {
     @Published var startTime: Date?
     
     init() {
+        if let configData = UserDefaults.standard.data(forKey: "sleepmood+config") {
+            do {
+                if let config = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(configData) as? Asleep.Config {
+                    self.config = config
+                }
+            } catch {
+                print("Failed to unarchive config:", error)
+                self.config = nil
+            }
+        } else {
+            self.config = nil
+        }
+        
         self.userId = UserDefaults.standard.string(forKey: "sleepmood+userId") ?? ""
+        print(Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String ?? "")
         self.apiKey = Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String ?? ""
         self.baseUrl = UserDefaults.standard.string(forKey: "sleepmood+baseurl") ?? ""
         self.callbackUrl = UserDefaults.standard.string(forKey: "sleepmood+callbackurl") ?? ""

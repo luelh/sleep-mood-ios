@@ -11,4 +11,11 @@ extension Date {
     var fullDateString: String {
         return Date.fullDateFormatter.string(from: self)
     }
-} 
+    
+    var simpleDateString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.timeZone = .current
+        return formatter.string(from: self)
+    }
+}
