@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MoodLightView: View {
-    @StateObject private var viewModel = MoodLightViewModel()
+    @EnvironmentObject private var viewModel: MoodLightViewModel
     
     var body: some View {
         ZStack {
@@ -32,11 +32,13 @@ struct MoodLightView: View {
                 
                 Spacer()
                 
-                Text(viewModel.isLightOn ? "Record 중..." : "Record 대기")
+                Text(viewModel.isTracking ? "Record 중..." : "Record 대기")
                     .font(.headline)
                     .foregroundColor(.white)
                     .padding()
             }
         }
+        .navigationTitle("무드등")
+        .navigationBarTitleDisplayMode(.inline)
     }
 } 

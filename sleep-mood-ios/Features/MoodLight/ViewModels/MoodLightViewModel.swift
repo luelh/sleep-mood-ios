@@ -27,6 +27,8 @@ class MoodLightViewModel: ObservableObject {
         }
     }
     
+    private var apiKey: String? = nil
+    
     @Published var sessionId: String?
     @Published var sequenceNumber: Int?
     @Published var error: String?
@@ -39,6 +41,7 @@ class MoodLightViewModel: ObservableObject {
         self.userId = UserDefaults.standard.string(forKey: "sleepmood+userId") ?? ""
         self.baseUrl = UserDefaults.standard.string(forKey: "sleepmood+baseurl") ?? ""
         self.callbackUrl = UserDefaults.standard.string(forKey: "sleepmood+callbackurl") ?? ""
+        self.apiKey = Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String ?? ""
         
         NotificationCenter.default.addObserver(self,
             selector: #selector(configDidUpdate),

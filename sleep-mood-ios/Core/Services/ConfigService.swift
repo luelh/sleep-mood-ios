@@ -32,7 +32,9 @@ class ConfigService: ObservableObject {
     private init() {}
     
     func initAsleepConfig() {
-        print("Initializing Asleep Config with userId:", userId)
+        print("api key info.plist:", Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String ?? "")
+        print("api key:", apiKey)
+        print("Initializing Asleep Config with userId:", userId.isEmpty ? nil : userId)
         Asleep.initAsleepConfig(
             apiKey: apiKey,
             userId: userId.isEmpty ? nil : userId,

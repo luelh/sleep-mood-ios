@@ -2,7 +2,7 @@ import SwiftUI
 import AsleepSDK
 
 struct SleepAnalysisView: View {
-    @StateObject private var viewModel = SleepAnalysisViewModel()
+    @EnvironmentObject private var viewModel: SleepAnalysisViewModel
     
     var body: some View {
         NavigationView {
@@ -30,12 +30,11 @@ struct SleepAnalysisView: View {
                                 VStack(alignment: .leading) {
                                     Text("ID: \(item.sessionId)")
                                     Text("State: \(item.state)")
-                                    Text("Start time: \(item.sessionStartTime.fullDateString)")
-                                    Text("End time: \(item.sessionEndTime?.fullDateString ?? "")")
+                                    Text("Start time: \(item.sessionStartTime)")
+                                    if let endTime = item.sessionEndTime {
+                                        Text("End time: \(endTime)")
+                                    }
                                 }
-                            }
-                            .onChange(of: viewModel.selectedSessionId) { _ in
-                                viewModel.fetchReport()
                             }
                         }
                     }
@@ -44,7 +43,6 @@ struct SleepAnalysisView: View {
             .navigationTitle("수면 분석")
         }
         .onAppear {
-            print("SleepAnalysisView appeared - Loading report list")
             viewModel.createReportList()
         }
     }
