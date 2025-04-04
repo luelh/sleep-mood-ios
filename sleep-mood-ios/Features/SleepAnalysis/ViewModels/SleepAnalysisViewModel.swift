@@ -6,6 +6,8 @@ class SleepAnalysisViewModel: ObservableObject {
     private var reports: Asleep.Reports?
     private var fromDate: String = "2025-01-01"
     private var toDate: String = "2025-04-04"
+    private var isCreatingReportList = false
+    private var hasInitialConfig = false
     
     @Published var reportList: [Asleep.Model.SleepSession] = []
     @Published var selectedSessionId: String? = nil {
@@ -24,44 +26,71 @@ class SleepAnalysisViewModel: ObservableObject {
             name: .asleepConfigDidUpdate,
             object: nil
         )
+        
+        // 초기 config 상태 확인
+        hasInitialConfig = configService.config != nil
     }
     
     @objc private func configDidUpdate() {
-        print("Config updated - Creating report list")
-        createReportList()
-    }
-    
-    func checkConfigAndCreateReportList() {
-        if configService.config != nil {
+        print("Config updated notification received")
+        if !hasInitialConfig {
+            hasInitialConfig = true
             createReportList()
         }
     }
     
-    func createReportList() {
+    func checkConfigAndCreateReportList() {
+        guard !isCreatingReportList else { 
+            print("Report list creation already in progress")
+            return 
+        }
+        
+        if configService.config != nil {
+            if !hasInitialConfig {
+                hasInitialConfig = true
+                createReportList()
+            }
+        } else {
+            print("Initializing Asleep config")
+            configService.initAsleepConfig()
+        }
+    }
+    
+    private func createReportList() {
+        guard !isCreatingReportList else { 
+            print("Skipping createReportList - already in progress")
+            return 
+        }
+        
+        isCreatingReportList = true
         print("Creating report list - Config exists:", configService.config != nil)
+        
         reports = configService.createReports()
         if reports != nil {
             fetchReportList()
         } else {
             print("No config available for creating reports")
+            isCreatingReportList = false
         }
     }
     
-    func fetchReportList() {
+    private func fetchReportList() {
         Task {
             do {
                 let reportList = try await reports?.reports(fromDate: fromDate, toDate: toDate)
                 await MainActor.run {
                     self.reportList = reportList ?? []
                     print("Fetched report list count:", self.reportList.count)
+                    self.isCreatingReportList = false
                 }
             } catch {
                 print("Failed to fetch report list:", error)
+                self.isCreatingReportList = false
             }
         }
     }
     
-    func fetchReport() {
+    private func fetchReport() {
         guard let sessionId = selectedSessionId else { return }
         
         Task {
