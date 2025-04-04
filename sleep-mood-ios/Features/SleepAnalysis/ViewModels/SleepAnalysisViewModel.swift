@@ -8,7 +8,13 @@ class SleepAnalysisViewModel: ObservableObject {
     private var toDate: String = "2025-04-04"
     
     @Published var reportList: [Asleep.Model.SleepSession] = []
-    @Published var selectedSessionId: String? = nil
+    @Published var selectedSessionId: String? = nil {
+        didSet {
+            if selectedSessionId != nil {
+                fetchReport()
+            }
+        }
+    }
     @Published var selectedReport: Asleep.Model.Report? = nil
     @Published var isAnalyzing = false
     
@@ -22,6 +28,8 @@ class SleepAnalysisViewModel: ObservableObject {
         // 초기 config가 있다면 바로 리포트 생성
         if configService.config != nil {
             createReportList()
+        } else {
+            configService.initAsleepConfig()
         }
     }
     
