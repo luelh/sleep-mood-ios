@@ -7,7 +7,6 @@ class SettingsViewModel: ObservableObject {
     let version: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
     
     init() {
-        // UserDefaults에서 userId 가져오기
-        userId = UserDefaults.standard.string(forKey: "com.sleepmood.userId") ?? "-"
+        userId = UserDefaults.standard.string(forKey: "sleepmood+userId") ?? "-"
     }
 } 

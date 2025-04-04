@@ -13,7 +13,14 @@ class ConfigService: ObservableObject {
     
     @Published private(set) var config: Asleep.Config?
     
-    var userId: String = UserDefaults.standard.string(forKey: "sleepmood+userId") ?? ""
+    var userId: String {
+        get {
+            UserDefaults.standard.string(forKey: "sleepmood+userId") ?? ""
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "sleepmood+userId")
+        }
+    }
     
     var apiKey: String {
         Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String ?? ""
@@ -58,7 +65,7 @@ class ConfigService: ObservableObject {
 extension ConfigService: AsleepConfigDelegate {
     func userDidJoin(userId: String, config: AsleepSDK.Asleep.Config) {
         Task { @MainActor in
-            print("UserDidJoin - Setting config")
+            print("UserDidJoin - Setting config and userId:", userId)
             self.config = config
             self.userId = userId
             NotificationCenter.default.post(name: .asleepConfigDidUpdate, object: nil)
@@ -71,6 +78,9 @@ extension ConfigService: AsleepConfigDelegate {
     
     func userDidDelete(userId: String) {
         print("Deleted user id:", userId)
+        if userId == self.userId {
+            self.userId = ""
+        }
     }
 }
 
