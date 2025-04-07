@@ -47,6 +47,7 @@ class MoodLightViewModel: ObservableObject {
     
     private func initSleepTrackingManager() {
         trackingManager = configService.createSleepTrackingManager(delegate: self)
+        startTracking(hasConfig: true)
     }
     
     private func stopTracking() {
