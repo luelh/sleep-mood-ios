@@ -36,6 +36,12 @@ struct SettingsView: View {
                     }
                 }
             }
+            Section(header: Text("녹음")) {
+                NavigationLink("최근 녹음 듣기") {
+                    PlaybackView()
+                }
+            }
+
         }
         .navigationTitle("설정")
         .navigationBarTitleDisplayMode(.inline)

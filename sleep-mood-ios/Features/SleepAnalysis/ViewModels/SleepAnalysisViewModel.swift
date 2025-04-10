@@ -13,7 +13,7 @@ class SleepAnalysisViewModel: ObservableObject {
     
     private var reports: Asleep.Reports?
     private var fromDate: String = "2025-01-01"
-    private var toDate: String = "2025-04-04"
+    private var toDate: String = Date().simpleDateString
     
     
     // MARK: - published state
@@ -33,16 +33,16 @@ class SleepAnalysisViewModel: ObservableObject {
     // MARK: - Initialize
     
     init() {
-        NotificationCenter.default.addObserver(self, selector: #selector(configDidUpdate), name: .asleepConfigDidUpdate, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(configDidUpdate), name: .asleepConfigDidUpdate, object: nil)
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    @objc private func configDidUpdate() {
-        createReportList()
-    }
+//    deinit {
+//        NotificationCenter.default.removeObserver(self)
+//    }
+//    
+//    @objc private func configDidUpdate() {
+//        createReportList()
+//    }
     
     
     // MARK: - private method
