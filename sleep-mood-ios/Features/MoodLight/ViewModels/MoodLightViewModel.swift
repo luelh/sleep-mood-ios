@@ -62,6 +62,7 @@ class MoodLightViewModel: ObservableObject {
             configService.initAsleepConfig()
         }
         sequenceNumber = nil
+        isLightOn = true
     }
     
     private func loadLightColor() {
@@ -76,6 +77,10 @@ class MoodLightViewModel: ObservableObject {
     
     func toggleLight() {
         isTracking ? stopTracking() : startTracking(hasConfig: configService.config != nil)
+    }
+    
+    func setLight() {
+        isLightOn.toggle()
     }
 
 }

@@ -12,7 +12,6 @@ extension MoodLightViewModel: AsleepSleepTrackingManagerDelegate {
     func didCreate() {
         Task { @MainActor in
             self.isTracking = true
-            self.isLightOn = true
             self.error = nil
         }
     }
