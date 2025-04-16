@@ -58,8 +58,9 @@ class ConfigService: ObservableObject {
         return Asleep.createReports(config: config)
     }
     
-    func createSleepTrackingManager(delegate: AsleepSleepTrackingManagerDelegate) -> Asleep.SleepTrackingManager? {
-        guard let config = config else { return nil }
+    func createSleepTrackingManager(config: Asleep.Config,
+                                    delegate: AsleepSleepTrackingManagerDelegate) -> Asleep.SleepTrackingManager? {
+//        
         return Asleep.createSleepTrackingManager(config: config, delegate: delegate)
     }
 }
