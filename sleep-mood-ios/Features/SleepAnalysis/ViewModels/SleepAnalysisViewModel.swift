@@ -87,6 +87,7 @@ class SleepAnalysisViewModel: ObservableObject {
     // MARK: - internal method
     
     func createReportList() {
+        guard let _ = configService.config else { return }
         guard let reports = configService.createReports() else {
             print("No config available for creating reports")
             return
