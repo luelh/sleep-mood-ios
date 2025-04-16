@@ -32,6 +32,9 @@ class MoodLightViewModel: ObservableObject {
     init() {
         loadLightColor()
         NotificationCenter.default.addObserver(self, selector: #selector(configDidUpdate), name: .asleepConfigDidUpdate, object: nil)
+        if let config = configService.config {
+            trackingManager = configService.createSleepTrackingManager(config: config, delegate: self)
+        }
     }
     
     deinit {
@@ -39,19 +42,22 @@ class MoodLightViewModel: ObservableObject {
     }
     
     @objc private func configDidUpdate() {
-        initSleepTrackingManager()
+        if let config = configService.config {
+            trackingManager = configService.createSleepTrackingManager(config: config, delegate: self)
+        }
     }
     
     
     // MARK: - private method
     
     private func initSleepTrackingManager() {
-        guard let config = ConfigService.shared.config else { return }
+        guard let config = configService.config else { return }
         trackingManager = configService.createSleepTrackingManager(config: config, delegate: self)
-        startTracking(hasConfig: true)
     }
     
     private func stopTracking() {
+        isTracking = false
+        isLightOn = false
         trackingManager?.stopTracking()
     }
     
@@ -59,11 +65,12 @@ class MoodLightViewModel: ObservableObject {
         sessionId = ""
         if hasConfig {
             trackingManager?.startTracking()
+            isTracking = true
+            isLightOn = true
         } else {
             configService.initAsleepConfig()
         }
         sequenceNumber = nil
-        isLightOn = true
     }
     
     private func loadLightColor() {
@@ -77,7 +84,11 @@ class MoodLightViewModel: ObservableObject {
     // MARK: - internal method
     
     func toggleLight() {
-        isTracking ? stopTracking() : startTracking(hasConfig: configService.config != nil)
+        if isTracking {
+            stopTracking()
+        } else {
+            startTracking(hasConfig: configService.config != nil)
+        }
     }
     
     func setLight() {
