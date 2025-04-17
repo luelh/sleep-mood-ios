@@ -10,12 +10,22 @@ import AsleepSDK
 
 struct SleepAnalysisDetailView: View {
     let report: Asleep.Model.Report?
+    @State private var showAudioList = false
     
     var body: some View {
         if let report = self.report {
             ScrollView {
                 detailView(report: report)
                     .frame(maxWidth: .infinity)
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink(destination: AudioListView(sessionId: report.session.id)
+                        .navigationBarTitleDisplayMode(.inline)) {
+                        Image(systemName: "waveform")
+                            .foregroundColor(.primary)
+                    }
+                }
             }
         }
     }
