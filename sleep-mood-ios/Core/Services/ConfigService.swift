@@ -112,7 +112,6 @@ class ConfigService: ObservableObject {
     
     func createSleepTrackingManager(config: Asleep.Config,
                                     delegate: AsleepSleepTrackingManagerDelegate) -> Asleep.SleepTrackingManager? {
-//        
         return Asleep.createSleepTrackingManager(config: config, delegate: delegate)
     }
 }
@@ -141,7 +140,36 @@ extension ConfigService: AsleepConfigDelegate {
     }
 }
 
+// MARK: - AsleepSetupDelegate
+extension ConfigService: AsleepSetupDelegate {
+    func setupDidComplete() {
+        print("OnDevice 설정 완료")
+        
+        // OnDevice 설정이 완료되면 config 초기화
+        if config == nil {
+            initAsleepConfig()
+        }
+    }
+    
+    func setupDidFail(error: Asleep.AsleepError) {
+        print("OnDevice 설정 실패: \(error)")
+        switch error {
+        case .unableODA:
+            print("OnDevice 사용 불가")
+        default:
+            print("설정 실패: \(error)")
+        }
+    }
+    
+    func setupInProgress(progress: Int) {
+        print("OnDevice 모델 다운로드 진행률: \(progress)%")
+    }
+}
+
 // MARK: - Notification Names
 extension Notification.Name {
     static let asleepConfigDidUpdate = Notification.Name("asleepConfigDidUpdate")
+    static let asleepSleepStageDidUpdate = Notification.Name("asleepSleepStageDidUpdate")
+    static let asleepOSADidUpdate = Notification.Name("asleepOSADidUpdate")
+    static let asleepSnoringDidUpdate = Notification.Name("asleepSnoringDidUpdate")
 }
