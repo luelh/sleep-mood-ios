@@ -19,6 +19,9 @@ extension MoodLightViewModel: AsleepSleepTrackingManagerDelegate {
     func didUpload(sequence: Int) {
         Task { @MainActor in
             self.sequenceNumber = sequence
+            if sequence % 10 == 0 {
+                trackingManager?.requestAnalysis()
+            }
         }
     }
     
