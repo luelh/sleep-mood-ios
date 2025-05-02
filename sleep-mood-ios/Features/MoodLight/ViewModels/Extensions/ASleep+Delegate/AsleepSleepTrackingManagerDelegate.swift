@@ -13,6 +13,10 @@ extension MoodLightViewModel: AsleepSleepTrackingManagerDelegate {
         Task { @MainActor in
             self.isTracking = true
             self.error = nil
+            
+            self.bufferList = []
+            self.isRecording = true
+            self.recordingStartTime = Date()
         }
     }
     
@@ -23,10 +27,23 @@ extension MoodLightViewModel: AsleepSleepTrackingManagerDelegate {
     }
     
     func didClose(sessionId: String) {
+        print("🔔 didClose called with sessionId:", sessionId)
         Task { @MainActor in
             self.isTracking = false
             self.isLightOn = false
             self.sessionId = sessionId
+            
+            self.isRecording = false
+
+            print("📝 Saving audio - format exists: \(self.audioFormat != nil), buffers count: \(self.bufferList.count)")
+            if let format = self.audioFormat {
+                saveBufferListAsAAC(buffers: self.bufferList, format: format, sessionId: sessionId)
+                print("✅ Audio save attempted for session:", sessionId)
+            } else {
+                print("❌ Audio format is nil")
+            }
+
+            self.bufferList = []
         }
     }
     

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MoodLightView: View {
     @EnvironmentObject private var viewModel: MoodLightViewModel
+    @State private var showBSleepList = false
     
     var body: some View {
         let lightColor = viewModel.lightColor.color
@@ -42,5 +43,16 @@ struct MoodLightView: View {
         }
         .navigationTitle("무드등")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarItems(trailing:
+            Button("BSleep") {
+                showBSleepList = true
+            }
+        )
+        .background(
+            NavigationLink(destination: BSleepAudioListView(), isActive: $showBSleepList) {
+                EmptyView()
+            }
+            .hidden()
+        )
     }
 } 

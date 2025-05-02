@@ -1,6 +1,7 @@
 import Foundation
 import AsleepSDK
 import SwiftUI
+import AVFoundation
 
 class MoodLightViewModel: ObservableObject {
     
@@ -14,6 +15,11 @@ class MoodLightViewModel: ObservableObject {
     
     private(set) var trackingManager: Asleep.SleepTrackingManager?
     private let colorKey = "sleepmood+lightColor"
+    
+    internal var bufferList: [AVAudioPCMBuffer] = []
+    internal var isRecording: Bool = false
+    internal var audioFormat: AVAudioFormat?
+    internal var recordingStartTime: Date?
     
     
     // MARK: - published state
@@ -34,7 +40,9 @@ class MoodLightViewModel: ObservableObject {
         NotificationCenter.default.addObserver(self, selector: #selector(configDidUpdate), name: .asleepConfigDidUpdate, object: nil)
         if let config = configService.config {
             trackingManager = configService.createSleepTrackingManager(config: config, delegate: self)
+            trackingManager?.setDeliveryDelegate(self)
         }
+        
     }
     
     deinit {
@@ -44,6 +52,7 @@ class MoodLightViewModel: ObservableObject {
     @objc private func configDidUpdate() {
         if let config = configService.config {
             trackingManager = configService.createSleepTrackingManager(config: config, delegate: self)
+            trackingManager?.setDeliveryDelegate(self)
         }
     }
     
@@ -53,6 +62,7 @@ class MoodLightViewModel: ObservableObject {
     private func initSleepTrackingManager() {
         guard let config = configService.config else { return }
         trackingManager = configService.createSleepTrackingManager(config: config, delegate: self)
+        trackingManager?.setDeliveryDelegate(self)
     }
     
     private func stopTracking() {
