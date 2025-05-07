@@ -1,0 +1,5 @@
+// 1. `Resources/Config.xcconfig.sample` 파일을 복사해서 다음 이름으로 저장:
+// cp sleep-mood-ios/Resources/Debug.xcconfig.sample sleep-mood-ios/Resources/Debug.xcconfig
+// 2. 복사된 `Config.xcconfig` 파일을 열고 본인의 API 키나 설정을 입력합니다.
+
+API_KEY=YOUR_API_KEY_HERE
