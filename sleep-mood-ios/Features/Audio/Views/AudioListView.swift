@@ -48,7 +48,11 @@ struct AudioListView: View {
         }
         .navigationTitle("코골이 녹음")
         .onAppear {
+            AudioSessionManager.shared.activateForPlayback()
             viewModel.loadAudioFiles(for: sessionId)
+        }
+        .onDisappear {
+            AudioSessionManager.shared.deactivate()
         }
     }
 }

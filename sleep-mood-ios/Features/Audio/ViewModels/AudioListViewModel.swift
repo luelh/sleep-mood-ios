@@ -18,16 +18,6 @@ class AudioListViewModel: NSObject, ObservableObject {
     
     override init() {
         super.init()
-        setupAudioSession()
-    }
-    
-    private func setupAudioSession() {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [.allowBluetooth, .allowBluetoothA2DP])
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            print("Failed to set audio session category:", error)
-        }
     }
     
     struct AudioFile: Identifiable, Hashable {

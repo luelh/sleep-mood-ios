@@ -37,37 +37,16 @@ struct BSleepAudioListView: View {
         }
         .navigationTitle("BSleep 오디오")
         .onAppear {
-            setupAudioSession()
+            AudioSessionManager.shared.activateForPlayback()
             loadAudioFiles()
         }
         .onDisappear {
-            cleanupAudioSession()
+            AudioSessionManager.shared.deactivate()
         }
         .alert("오류", isPresented: $showError) {
             Button("확인", role: .cancel) {}
         } message: {
             Text(errorMessage ?? "알 수 없는 오류가 발생했습니다.")
-        }
-    }
-    
-    private func setupAudioSession() {
-        do {
-            let session = AVAudioSession.sharedInstance()
-            try session.setCategory(.playback, mode: .default, options: [.allowBluetooth, .allowBluetoothA2DP])
-            try session.setActive(true)
-        } catch {
-            print("❌ AVAudioSession 설정 실패:", error)
-        }
-    }
-    
-    private func cleanupAudioSession() {
-        player?.stop()
-        player = nil
-        playingFile = nil
-        do {
-            try AVAudioSession.sharedInstance().setActive(false)
-        } catch {
-            print("❌ AVAudioSession 비활성화 실패:", error)
         }
     }
     
