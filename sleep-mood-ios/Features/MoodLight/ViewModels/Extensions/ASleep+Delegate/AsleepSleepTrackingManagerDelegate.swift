@@ -36,14 +36,7 @@ extension MoodLightViewModel: AsleepSleepTrackingManagerDelegate {
             self.isRecording = false
 
             print("📝 Saving audio - format exists: \(self.audioFormat != nil), buffers count: \(self.bufferList.count)")
-            if let format = self.audioFormat {
-                saveBufferListAsAAC(buffers: self.bufferList, format: format, sessionId: sessionId)
-                print("✅ Audio save attempted for session:", sessionId)
-            } else {
-                print("❌ Audio format is nil")
-            }
-
-            self.bufferList = []
+            self.audioFile = nil
         }
     }
     

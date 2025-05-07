@@ -21,6 +21,9 @@ class MoodLightViewModel: ObservableObject {
     internal var audioFormat: AVAudioFormat?
     internal var recordingStartTime: Date?
     
+    // 실시간 저장용 오디오 파일 핸들러
+    internal var audioFile: AVAudioFile?
+    
     
     // MARK: - published state
     
