@@ -56,6 +56,7 @@ class MoodLightViewModel: ObservableObject {
     }
     
     private func stopTracking() {
+        print("-- stopTracking --")
         isTracking = false
         isLightOn = false
         trackingManager?.stopTracking()
@@ -64,10 +65,12 @@ class MoodLightViewModel: ObservableObject {
     private func startTracking(hasConfig: Bool) {
         sessionId = ""
         if hasConfig {
+            print("-- startTracking --")
             trackingManager?.startTracking()
             isTracking = true
             isLightOn = true
         } else {
+            print("-- startTracking initAsleepConfig --")
             configService.initAsleepConfig()
         }
         sequenceNumber = nil

@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var moodLightViewModel = MoodLightViewModel()
     @StateObject private var sleepAnalysisViewModel = SleepAnalysisViewModel()
+    @StateObject private var largeFileManagerCoordinator = LargeFileManagerCoordinator()
     
     var body: some View {
         TabView {
@@ -38,6 +39,15 @@ struct ContentView: View {
                 Image(systemName: "gear")
                 Text("설정")
             }
+            
+            NavigationView {
+                LargeFileManagerCoordinator().makeView()
+            }
+            .tabItem {
+                Image(systemName: "externaldrive")
+                Text("대용량")
+            }
+            .environmentObject(largeFileManagerCoordinator)
         }
     }
 }
